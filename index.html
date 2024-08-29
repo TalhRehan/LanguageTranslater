@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Detection and Translation</title>
+    <!-- Include Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Include Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #3b3f47; /* Dark slate gray background */
+            color: #d1d4d9; /* Light gray text color */
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #4b515b; /* Lighter slate gray background */
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffbf47; /* Amber color for headers */
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #d1d4d9; /* Light gray for label text */
+        }
+
+        textarea, select {
+            width: 100%;
+            padding: 12px;
+            background-color: #6b727c; /* Medium gray background for inputs */
+            border: 2px solid #5a6069; /* Subtle border color */
+            border-radius: 8px;
+            color: #ffffff; /* White text for contrast */
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea:focus, select:focus {
+            border-color: #ffbf47; /* Amber accent on focus */
+            outline: none;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #ff8c00; /* Bright amber color for buttons */
+            color: #fff; /* White text */
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #e07b00; /* Darker amber on hover */
+        }
+
+        .result {
+            margin-top: 30px;
+            background-color: #6b727c; /* Medium gray background for results */
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+            color: #d1d4d9; /* Light gray color for text in results */
+        }
+
+        .icon {
+            font-size: 18px;
+        }
+
+        /* Adding a subtle animation */
+        .container {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1><i class="fas fa-language"></i> Language Detection and Translation</h1>
+    <form action="/trans" method="post">
+        <div>
+            <label for="text">Enter Text</label>
+            <textarea name="text" id="text" placeholder="Type your text here..." required></textarea>
+        </div>
+        <div>
+            <label for="target_lang">Select Target Language</label>
+            <select name="target_lang" id="target_lang" required>
+                {% for lang_code, lang_name in languages.items() %}
+                <option value="{{lang_code}}">{{lang_name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit"><i class="fas fa-exchange-alt"></i> Translate</button>
+    </form>
+
+    <!-- Display the result -->
+    {% if translation %}
+    <div class="result">
+        <h4><i class="fas fa-info-circle"></i> Detected Language: {{detected_lang}}</h4>
+        <h4><i class="fas fa-check-circle"></i> Translated Text: {{translation}}</h4>
+    </div>
+    {% endif %}
+</div>
+
+</body>
+
+</html>
